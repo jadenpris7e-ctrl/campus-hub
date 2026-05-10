@@ -1,34 +1,73 @@
-export default function Events() {
+import { CalendarDays } from "lucide-react"
+
+export default function EventsPage() {
+
+  const events = [
+    {
+      title: "Annual Sports Meet",
+      date: "June 2, 2026",
+    },
+
+    {
+      title: "Science Expo",
+      date: "June 10, 2026",
+    },
+
+    {
+      title: "Inter-House Debate",
+      date: "June 15, 2026",
+    },
+  ]
+
   return (
-    <main className="min-h-screen bg-gray-50 p-6">
+    <main className="space-y-6">
 
-      <h1 className="text-4xl font-bold mb-2">
-        📅 Events & Calendar
-      </h1>
+      <div>
 
-      <p className="text-gray-600 mb-6">
-        Upcoming school events and activities
-      </p>
+        <h1 className="text-4xl font-bold mb-2">
+          Events
+        </h1>
 
-      <div className="grid md:grid-cols-2 gap-4">
+        <p className="text-gray-500">
+          Upcoming school activities
+        </p>
 
-        <div className="p-4 bg-white rounded-xl shadow">
-          <h2 className="font-semibold">Annual Science Fair</h2>
-          <p className="text-sm text-gray-500">Date: 15 May</p>
-          <p className="text-sm text-gray-500">Location: School Auditorium</p>
-        </div>
+      </div>
 
-        <div className="p-4 bg-white rounded-xl shadow">
-          <h2 className="font-semibold">Sports Day</h2>
-          <p className="text-sm text-gray-500">Date: 22 May</p>
-          <p className="text-sm text-gray-500">Location: School Ground</p>
-        </div>
+      <div className="grid gap-5">
 
-        <div className="p-4 bg-white rounded-xl shadow">
-          <h2 className="font-semibold">Parent-Teacher Meeting</h2>
-          <p className="text-sm text-gray-500">Date: 28 May</p>
-          <p className="text-sm text-gray-500">Online + Offline</p>
-        </div>
+        {events.map((event, index) => (
+
+          <div
+            key={index}
+            className="bg-white rounded-3xl shadow-lg p-6 border border-slate-200"
+          >
+
+            <div className="flex items-start gap-4">
+
+              <div className="bg-purple-100 p-3 rounded-2xl">
+
+                <CalendarDays className="text-purple-600" />
+
+              </div>
+
+              <div>
+
+                <h2 className="text-2xl font-semibold mb-2">
+                  {event.title}
+                </h2>
+
+                <p className="text-gray-500">
+                  {event.date}
+                </p>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        ))}
 
       </div>
 

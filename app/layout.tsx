@@ -22,7 +22,8 @@ import {
   Timer,
   Phone,
   Menu,
-  X,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react"
 
 export default function RootLayout({
@@ -30,9 +31,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+
   const pathname = usePathname()
 
   const [open, setOpen] = useState(false)
+
+  const [collapsed, setCollapsed] = useState(false)
 
   const links = [
     {
@@ -48,7 +52,7 @@ export default function RootLayout({
     },
 
     {
-      name: "Study",
+      name: "NS SCOPE",
       href: "/study",
       icon: GraduationCap,
     },
@@ -110,17 +114,21 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className="bg-gray-100 text-black">
+
+      <body className="bg-[#EAF1F8] text-[#16324F]">
 
         {/* MOBILE TOPBAR */}
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-white shadow-md flex items-center justify-between px-5 py-4">
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#355C7D] text-white shadow-xl flex items-center justify-between px-5 py-4">
 
-          <h1 className="text-2xl font-bold">
+          <h1 className="text-xl font-bold tracking-wide">
             GIHS CAMPUS HUB
           </h1>
 
-          <button onClick={() => setOpen(!open)}>
-            {open ? <X size={30} /> : <Menu size={30} />}
+          <button
+            onClick={() => setOpen(!open)}
+            className="hover:bg-white/10 p-2 rounded-xl transition"
+          >
+            <Menu size={28} />
           </button>
 
         </div>
@@ -131,38 +139,59 @@ export default function RootLayout({
           <aside
             className={`
               fixed top-0 left-0 z-50
-              h-screen w-72 bg-white shadow-xl
-              transition-transform duration-300
+              h-screen
+              bg-[#355C7D]
+              text-[#F8FAFC]
+              shadow-2xl
+              transition-all duration-300
               overflow-y-auto
+              border-r border-white/10
+              ${collapsed ? "w-24" : "w-72"}
               ${open ? "translate-x-0" : "-translate-x-full"}
               lg:translate-x-0
             `}
           >
 
             {/* LOGO */}
-            <div className="p-6 border-b sticky top-0 bg-white z-10">
+            <div className="p-6 border-b border-white/10 sticky top-0 bg-[#355C7D] z-10">
 
               <div className="flex items-center justify-between">
 
-                <h1 className="text-3xl font-bold">
-                  GIHS
-                </h1>
+                {!collapsed && (
+                  <div>
 
+                    <h1 className="text-3xl font-extrabold leading-tight tracking-wide">
+                      GIHS
+                    </h1>
+
+                    <p className="text-sm text-[#D6E4F0]">
+                      Campus Hub
+                    </p>
+
+                  </div>
+                )}
+
+                {/* COLLAPSE BUTTON */}
                 <button
-                  className="lg:hidden"
-                  onClick={() => setOpen(false)}
+                  className="hidden lg:flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl p-2 transition"
+                  onClick={() => setCollapsed(!collapsed)}
                 >
-                  <X size={26} />
+                  {collapsed ? (
+                    <ChevronRight size={22} />
+                  ) : (
+                    <ChevronLeft size={22} />
+                  )}
                 </button>
 
               </div>
 
             </div>
 
-            {/* LINKS */}
-            <nav className="p-4 space-y-2">
+            {/* NAVIGATION */}
+            <nav className="p-4 space-y-3">
 
               {links.map((link) => {
+
                 const Icon = link.icon
 
                 const active = pathname === link.href
@@ -173,19 +202,27 @@ export default function RootLayout({
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={`
-                      flex items-center gap-4
+                      flex items-center
+                      ${collapsed ? "justify-center" : "gap-4"}
                       px-5 py-4 rounded-2xl
                       transition-all duration-200
                       font-medium
                       ${
                         active
-                          ? "bg-black text-white shadow-lg"
-                          : "hover:bg-gray-100"
+                          ? "bg-[#F8FAFC] text-[#355C7D] shadow-lg"
+                          : "hover:bg-[#4B7AA3]"
                       }
                     `}
                   >
+
                     <Icon size={22} />
-                    {link.name}
+
+                    {!collapsed && (
+                      <span className="tracking-wide">
+                        {link.name}
+                      </span>
+                    )}
+
                   </Link>
                 )
               })}
@@ -194,7 +231,7 @@ export default function RootLayout({
 
           </aside>
 
-          {/* BACKDROP */}
+          {/* MOBILE BACKDROP */}
           {open && (
             <div
               className="fixed inset-0 bg-black/40 z-40 lg:hidden"
@@ -204,21 +241,26 @@ export default function RootLayout({
 
           {/* PAGE CONTENT */}
           <main
-            className="
+            className={`
               flex-1
               min-h-screen
-              lg:ml-72
               pt-24 lg:pt-8
-              px-5 lg:px-10
+              px-6 lg:px-10
               pb-10
-            "
+              transition-all duration-300
+              overflow-hidden
+              ${collapsed ? "lg:ml-24" : "lg:ml-72"}
+            `}
           >
+
             {children}
+
           </main>
 
         </div>
 
       </body>
+
     </html>
   )
 }
