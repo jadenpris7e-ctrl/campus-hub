@@ -1,28 +1,53 @@
+import { Image as ImageIcon } from "lucide-react"
+
 export default function GalleryPage() {
+
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
+    <main className="space-y-6">
 
-      <section className="bg-white rounded-3xl shadow border p-8">
+      <div>
 
-        <h1 className="text-4xl font-bold mb-4">
-          🖼 Gallery
+        <h1 className="text-4xl font-bold mb-2">
+          Gallery
         </h1>
 
-        <p className="text-gray-500 mb-6">
-          School memories, events and achievements.
+        <p className="text-gray-500">
+          School memories and event highlights
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+      </div>
 
-          <div className="bg-gray-200 h-56 rounded-2xl"></div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
-          <div className="bg-gray-200 h-56 rounded-2xl"></div>
+        {[1,2,3,4,5,6].map((item) => (
 
-          <div className="bg-gray-200 h-56 rounded-2xl"></div>
+          <div
+            key={item}
+            className="bg-white rounded-3xl shadow-lg border border-slate-200 overflow-hidden"
+          >
 
-        </div>
+            <div className="h-52 bg-slate-200 flex items-center justify-center">
 
-      </section>
+              <ImageIcon
+                size={50}
+                className="text-slate-500"
+              />
+
+            </div>
+
+            <div className="p-5">
+
+              <h2 className="text-xl font-semibold">
+                Event Photo {item}
+              </h2>
+
+            </div>
+
+          </div>
+
+        ))}
+
+      </div>
 
     </main>
   )

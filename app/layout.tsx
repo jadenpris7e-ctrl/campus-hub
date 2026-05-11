@@ -21,6 +21,7 @@ import {
   Users,
   Timer,
   Phone,
+  Shield,
   Menu,
   ChevronLeft,
   ChevronRight,
@@ -106,6 +107,12 @@ export default function RootLayout({
     },
 
     {
+      name: "Admin",
+      href: "/admin",
+      icon: Shield,
+    },
+
+    {
       name: "Contact",
       href: "/contact",
       icon: Phone,
@@ -115,10 +122,10 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body className="bg-[#EAF1F8] text-[#16324F]">
+      <body className="bg-[#F4F7FA] text-[#0B1F33]">
 
         {/* MOBILE TOPBAR */}
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#355C7D] text-white shadow-xl flex items-center justify-between px-5 py-4">
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#355C7D] text-black shadow-xl flex items-center justify-between px-5 py-4">
 
           <h1 className="text-xl font-bold tracking-wide">
             GIHS CAMPUS HUB
@@ -153,22 +160,23 @@ export default function RootLayout({
           >
 
             {/* LOGO */}
-            <div className="p-6 border-b border-white/10 sticky top-0 bg-[#355C7D] z-10">
+            <div className="p-6 border-b border-white/10 sticky top-0 bg-[#0B3C5D] z-20">
 
-              <div className="flex items-center justify-between">
+              <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between"}`}>
 
                 {!collapsed && (
                   <div>
 
-                    <h1 className="text-3xl font-extrabold leading-tight tracking-wide">
+                    <h1 className="text-3xl font-bold leading-tight widespace-nowrap">
                       GIHS
                     </h1>
 
-                    <p className="text-sm text-[#D6E4F0]">
+                    <p className="text-sm text-black whitespace-nowrap">
                       Campus Hub
                     </p>
 
                   </div>
+                
                 )}
 
                 {/* COLLAPSE BUTTON */}
@@ -188,7 +196,7 @@ export default function RootLayout({
             </div>
 
             {/* NAVIGATION */}
-            <nav className="p-4 space-y-3">
+            <nav className="p-4 space-y-3 mt-2">
 
               {links.map((link) => {
 
@@ -203,19 +211,23 @@ export default function RootLayout({
                     onClick={() => setOpen(false)}
                     className={`
                       flex items-center
-                      ${collapsed ? "justify-center" : "gap-4"}
-                      px-5 py-4 rounded-2xl
+                      ${collapsed ? "justify-center px-0" : "gap-4 px-5"}
+                      py-4 
+                      rounded-2xl
                       transition-all duration-200
                       font-medium
+                      min-h-[60px]
+                      overflow-hidden
                       ${
                         active
-                          ? "bg-[#F8FAFC] text-[#355C7D] shadow-lg"
-                          : "hover:bg-[#4B7AA3]"
+                          ? "bg-white text-[#0B3C5D] shadow-lg"
+                          : "hover:bg-white/10"
                       }
                     `}
                   >
-
-                    <Icon size={22} />
+                    <div className="min-w-[22px] flex-justify-center">
+                      <Icon size={22} />
+                    </div>
 
                     {!collapsed && (
                       <span className="tracking-wide">

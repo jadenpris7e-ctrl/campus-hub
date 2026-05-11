@@ -1,52 +1,35 @@
 export default function CountdownPage() {
+
   return (
-    <main className="min-h-screen bg-gray-100 p-6">
+    <main className="space-y-6">
 
-      <section className="bg-white rounded-3xl shadow border p-8">
+      <div>
 
-        <h1 className="text-4xl font-bold mb-4">
-          ⏳ Countdown Widgets
+        <h1 className="text-4xl font-bold mb-2">
+          Countdown Widgets
         </h1>
 
-        <p className="text-gray-500 mb-6">
-          Upcoming important school events.
+        <p className="text-gray-600">
+          Important upcoming dates
         </p>
 
-        <div className="grid md:grid-cols-3 gap-5">
+      </div>
 
-          <div className="bg-gray-100 p-6 rounded-2xl">
-            <h2 className="text-xl font-semibold mb-2">
-              Board Exams
-            </h2>
+      <div className="bg-blue-600 rounded-3xl shadow-2xl p-10 max-w-3xl">
 
-            <p className="text-gray-500">
-              120 Days Left
-            </p>
-          </div>
+        <p className="uppercase tracking-[4px] text-sm mb-3 text-white">
+          Next Major Exam
+        </p>
 
-          <div className="bg-gray-100 p-6 rounded-2xl">
-            <h2 className="text-xl font-semibold mb-2">
-              Sports Day
-            </h2>
+        <h2 className="text-6xl font-extrabold mb-4 text-white">
+          12 DAYS
+        </h2>
 
-            <p className="text-gray-500">
-              45 Days Left
-            </p>
-          </div>
+        <p className="text-xl text-white">
+          Mid-Term Examinations
+        </p>
 
-          <div className="bg-gray-100 p-6 rounded-2xl">
-            <h2 className="text-xl font-semibold mb-2">
-              Annual Day
-            </h2>
-
-            <p className="text-gray-500">
-              70 Days Left
-            </p>
-          </div>
-
-        </div>
-
-      </section>
+      </div>
 
     </main>
   )
