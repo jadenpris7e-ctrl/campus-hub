@@ -21,6 +21,7 @@ import {
   Users,
   Timer,
   Phone,
+  Award,
   Shield,
   Menu,
   ChevronLeft,
@@ -74,6 +75,12 @@ export default function RootLayout({
       name: "Leaderboard",
       href: "/leaderboard",
       icon: Trophy,
+    },
+
+    {
+      name: "Winners",
+      href: "/winners",
+      icon: Award,
     },
 
     {
