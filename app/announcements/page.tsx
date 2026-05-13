@@ -2,6 +2,7 @@ import {
   Bell,
   Pin,
   CalendarDays,
+  Megaphone,
 } from "lucide-react"
 
 export default function AnnouncementsPage() {
@@ -9,35 +10,31 @@ export default function AnnouncementsPage() {
   const announcements = [
 
     {
-      title: "Mid-Term Examination Schedule Released",
-      desc: "Students are requested to check the updated examination timetable.",
-      date: "July 18, 2026",
+      title: "Mid-Term Examinations Begin Next Week",
+      desc: "Students are advised to check the updated exam timetable and prepare accordingly.",
       type: "Important",
-      pinned: true,
+      date: "August 10, 2026",
     },
 
     {
-      title: "Science Expo Registrations Open",
-      desc: "Interested students may register through the school office.",
-      date: "July 15, 2026",
-      type: "Event",
-      pinned: false,
-    },
-
-    {
-      title: "New Grade 12 Resources Uploaded",
-      desc: "Additional worksheets and PYQs have been added.",
-      date: "July 12, 2026",
+      title: "Science Expo Registration Open",
+      desc: "Interested students can register through their class teachers before Friday.",
       type: "Academic",
-      pinned: false,
+      date: "August 14, 2026",
     },
 
     {
-      title: "Inter-House Competition Next Week",
-      desc: "Prepare for athletics and quiz competitions.",
-      date: "July 10, 2026",
-      type: "Competition",
-      pinned: false,
+      title: "New Study Resources Uploaded",
+      desc: "Additional notes and worksheets have been added for Grades 10–12.",
+      type: "Resources",
+      date: "August 18, 2026",
+    },
+
+    {
+      title: "Inter-House Sports Practice Schedule Released",
+      desc: "Practice sessions for all houses will begin from Monday.",
+      type: "Sports",
+      date: "August 22, 2026",
     },
   ]
 
@@ -45,7 +42,7 @@ export default function AnnouncementsPage() {
     <main className="space-y-8">
 
       {/* HERO */}
-      <section className="bg-gradient-to-r from-[#7C3AED] via-[#4F46E5] to-[#2563EB] text-white rounded-[35px] p-10 shadow-2xl">
+      <section className="bg-gradient-to-r from-[#2563EB] via-[#7C3AED] to-[#EC4899] text-white rounded-[35px] p-10 shadow-2xl">
 
         <p className="uppercase tracking-[4px] text-sm text-white/80 mb-3">
           SCHOOL COMMUNICATION
@@ -66,7 +63,7 @@ export default function AnnouncementsPage() {
             </h1>
 
             <p className="text-lg text-white/90 mt-2">
-              Official notices, updates and academic information
+              Latest notices, updates and important information
             </p>
 
           </div>
@@ -75,77 +72,53 @@ export default function AnnouncementsPage() {
 
       </section>
 
-      {/* PINNED */}
-      <section>
+      {/* PINNED NOTICE */}
+      <section className="bg-white rounded-3xl shadow-2xl border border-slate-200 overflow-hidden">
 
-        <div className="flex items-center gap-3 mb-6">
+        <div className="bg-gradient-to-r from-red-500 to-orange-500 text-white p-8">
 
-          <Pin className="text-red-500" />
+          <div className="flex items-center gap-3 mb-4">
 
-          <h2 className="text-3xl font-bold">
-            Pinned Announcement
-          </h2>
+            <Pin size={28} />
+
+            <h2 className="text-3xl font-bold">
+              Pinned Announcement
+            </h2>
+
+          </div>
+
+          <h3 className="text-4xl font-extrabold mb-3">
+            Mid-Term Exams Starting Soon
+          </h3>
+
+          <p className="text-lg text-white/90">
+            Students must complete revisions and verify examination schedules.
+          </p>
 
         </div>
 
-        {announcements
-          .filter((item) => item.pinned)
-          .map((item, index) => (
-
-            <div
-              key={index}
-              className="
-                bg-white
-                border-l-[10px]
-                border-red-500
-                rounded-3xl
-                shadow-xl
-                p-8
-              "
-            >
-
-              <div className="flex flex-wrap items-center gap-3 mb-4">
-
-                <span className="bg-red-100 text-red-600 px-4 py-1 rounded-full text-sm font-semibold">
-                  PINNED
-                </span>
-
-                <span className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-semibold">
-                  {item.type}
-                </span>
-
-              </div>
-
-              <h3 className="text-3xl font-bold mb-4">
-                {item.title}
-              </h3>
-
-              <p className="text-gray-600 text-lg mb-5">
-                {item.desc}
-              </p>
-
-              <div className="flex items-center gap-2 text-gray-500">
-
-                <CalendarDays size={18} />
-
-                {item.date}
-
-              </div>
-
-            </div>
-
-          ))}
-
       </section>
 
-      {/* ALL ANNOUNCEMENTS */}
+      {/* ANNOUNCEMENTS */}
       <section>
 
-        <h2 className="text-3xl font-bold mb-6">
-          Latest Updates
-        </h2>
+        <div className="flex items-center justify-between mb-6">
 
-        <div className="grid gap-6">
+          <div>
+
+            <h2 className="text-3xl font-bold">
+              Latest Updates
+            </h2>
+
+            <p className="text-gray-500 mt-1">
+              Recent notices and announcements
+            </p>
+
+          </div>
+
+        </div>
+
+        <div className="space-y-6">
 
           {announcements.map((item, index) => (
 
@@ -156,33 +129,53 @@ export default function AnnouncementsPage() {
                 rounded-3xl
                 shadow-lg
                 border border-slate-200
-                p-7
+                overflow-hidden
                 hover:shadow-2xl
                 transition
               "
             >
 
-              <div className="flex flex-wrap items-center gap-3 mb-4">
+              <div className="bg-gradient-to-r from-[#2563EB] to-[#7C3AED] h-2" />
 
-                <span className="bg-indigo-100 text-indigo-600 px-4 py-1 rounded-full text-sm font-semibold">
-                  {item.type}
-                </span>
+              <div className="p-8">
 
-              </div>
+                <div className="flex flex-wrap items-center gap-3 mb-5">
 
-              <h3 className="text-2xl font-bold mb-3">
-                {item.title}
-              </h3>
+                  <span className="bg-blue-100 text-blue-600 px-4 py-1 rounded-full text-sm font-semibold">
+                    {item.type}
+                  </span>
 
-              <p className="text-gray-600 mb-5">
-                {item.desc}
-              </p>
+                  <div className="flex items-center gap-2 text-gray-500 text-sm">
 
-              <div className="flex items-center gap-2 text-gray-500">
+                    <CalendarDays size={16} />
 
-                <CalendarDays size={18} />
+                    {item.date}
 
-                {item.date}
+                  </div>
+
+                </div>
+
+                <div className="flex items-start gap-4">
+
+                  <div className="bg-slate-100 p-4 rounded-2xl">
+
+                    <Megaphone className="text-blue-600" size={28} />
+
+                  </div>
+
+                  <div>
+
+                    <h3 className="text-3xl font-bold mb-3">
+                      {item.title}
+                    </h3>
+
+                    <p className="text-gray-600 text-lg leading-relaxed">
+                      {item.desc}
+                    </p>
+
+                  </div>
+
+                </div>
 
               </div>
 

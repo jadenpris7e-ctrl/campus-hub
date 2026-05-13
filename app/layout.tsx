@@ -21,11 +21,11 @@ import {
   Users,
   Timer,
   Phone,
-  Award,
-  Shield,
   Menu,
   ChevronLeft,
   ChevronRight,
+  Award,
+  Bot,
 } from "lucide-react"
 
 export default function RootLayout({
@@ -41,6 +41,7 @@ export default function RootLayout({
   const [collapsed, setCollapsed] = useState(false)
 
   const links = [
+
     {
       name: "Home",
       href: "/",
@@ -54,7 +55,13 @@ export default function RootLayout({
     },
 
     {
-      name: "NS SCOPE",
+      name: "AI Assistant",
+      href: "/ai",
+      icon: Bot,
+    },
+
+    {
+      name: "Study",
       href: "/study",
       icon: GraduationCap,
     },
@@ -114,12 +121,6 @@ export default function RootLayout({
     },
 
     {
-      name: "Admin",
-      href: "/admin",
-      icon: Shield,
-    },
-
-    {
       name: "Contact",
       href: "/contact",
       icon: Phone,
@@ -129,20 +130,20 @@ export default function RootLayout({
   return (
     <html lang="en">
 
-      <body className="bg-[#F4F7FA] text-[#0B1F33]">
+      <body className="bg-[#EAF1F8] text-[#10243E]">
 
         {/* MOBILE TOPBAR */}
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#355C7D] text-black shadow-xl flex items-center justify-between px-5 py-4">
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#12355B]/95 backdrop-blur-xl border-b border-white/10 shadow-xl flex items-center justify-between px-5 py-4">
 
-          <h1 className="text-xl font-bold tracking-wide">
+          <h1 className="text-xl font-bold text-white">
             GIHS CAMPUS HUB
           </h1>
 
           <button
             onClick={() => setOpen(!open)}
-            className="hover:bg-white/10 p-2 rounded-xl transition"
+            className="bg-white/10 p-2 rounded-xl text-white"
           >
-            <Menu size={28} />
+            <Menu size={26} />
           </button>
 
         </div>
@@ -153,13 +154,13 @@ export default function RootLayout({
           <aside
             className={`
               fixed top-0 left-0 z-50
-              h-screen
-              bg-[#355C7D]
-              text-[#F8FAFC]
+              h-[100dvh]
+              overflow-y-auto
+              overflow-x-hidden
+              bg-[#12355B]
+              text-white
               shadow-2xl
               transition-all duration-300
-              overflow-y-auto
-              border-r border-white/10
               ${collapsed ? "w-24" : "w-72"}
               ${open ? "translate-x-0" : "-translate-x-full"}
               lg:translate-x-0
@@ -167,35 +168,46 @@ export default function RootLayout({
           >
 
             {/* LOGO */}
-            <div className="p-6 border-b border-white/10 sticky top-0 bg-[#0B3C5D] z-20">
+            <div className="p-6 border-b border-white/10 sticky top-0 bg-[#12355B] z-10">
 
-              <div className={`flex items-center ${collapsed ? "justify-center" : "justify-between"}`}>
+              <div className="flex items-center justify-between">
 
                 {!collapsed && (
+
                   <div>
 
-                    <h1 className="text-3xl font-bold leading-tight widespace-nowrap">
+                    <h1 className="text-3xl font-black tracking-wide">
                       GIHS
                     </h1>
 
-                    <p className="text-sm text-black whitespace-nowrap">
+                    <p className="text-sm text-blue-100 mt-1">
                       Campus Hub
                     </p>
 
                   </div>
-                
+
                 )}
 
                 {/* COLLAPSE BUTTON */}
                 <button
-                  className="hidden lg:flex items-center justify-center bg-white/10 hover:bg-white/20 rounded-xl p-2 transition"
+                  className="
+                    hidden lg:flex
+                    items-center justify-center
+                    bg-white/10
+                    hover:bg-white/20
+                    rounded-xl
+                    p-2
+                    transition
+                  "
                   onClick={() => setCollapsed(!collapsed)}
                 >
+
                   {collapsed ? (
                     <ChevronRight size={22} />
                   ) : (
                     <ChevronLeft size={22} />
                   )}
+
                 </button>
 
               </div>
@@ -203,7 +215,7 @@ export default function RootLayout({
             </div>
 
             {/* NAVIGATION */}
-            <nav className="p-4 space-y-3 mt-2">
+            <nav className="p-3 space-y-2 pb-24">
 
               {links.map((link) => {
 
@@ -212,37 +224,41 @@ export default function RootLayout({
                 const active = pathname === link.href
 
                 return (
+
                   <Link
                     key={link.href}
                     href={link.href}
                     onClick={() => setOpen(false)}
                     className={`
                       flex items-center
-                      ${collapsed ? "justify-center px-0" : "gap-4 px-5"}
-                      py-4 
-                      rounded-2xl
+                      ${collapsed ? "justify-center" : "gap-4"}
+                      px-4 py-3 rounded-2xl
                       transition-all duration-200
                       font-medium
-                      min-h-[60px]
-                      overflow-hidden
+                      group
                       ${
                         active
-                          ? "bg-white text-[#0B3C5D] shadow-lg"
-                          : "hover:bg-white/10"
+                          ? "bg-white text-[#12355B] shadow-lg"
+                          : "hover:bg-white/10 text-white"
                       }
                     `}
                   >
-                    <div className="min-w-[22px] flex-justify-center">
-                      <Icon size={22} />
-                    </div>
+
+                    <Icon
+                      size={22}
+                      className="shrink-0"
+                    />
 
                     {!collapsed && (
-                      <span className="tracking-wide">
+
+                      <span className="truncate">
                         {link.name}
                       </span>
+
                     )}
 
                   </Link>
+
                 )
               })}
 
@@ -252,22 +268,24 @@ export default function RootLayout({
 
           {/* MOBILE BACKDROP */}
           {open && (
+
             <div
               className="fixed inset-0 bg-black/40 z-40 lg:hidden"
               onClick={() => setOpen(false)}
             />
+
           )}
 
-          {/* PAGE CONTENT */}
+          {/* MAIN CONTENT */}
           <main
             className={`
               flex-1
               min-h-screen
               pt-24 lg:pt-8
-              px-6 lg:px-10
+              px-4 sm:px-6 lg:px-10
               pb-10
               transition-all duration-300
-              overflow-hidden
+              overflow-x-hidden
               ${collapsed ? "lg:ml-24" : "lg:ml-72"}
             `}
           >
