@@ -24,8 +24,10 @@ import {
   Menu,
   ChevronLeft,
   ChevronRight,
-  Award,
-  Bot,
+  Shield,
+  ChevronDown,
+  User,
+  UserCog,
 } from "lucide-react"
 
 export default function RootLayout({
@@ -40,6 +42,8 @@ export default function RootLayout({
 
   const [collapsed, setCollapsed] = useState(false)
 
+  const [loginOpen, setLoginOpen] = useState(false)
+
   const links = [
 
     {
@@ -52,12 +56,6 @@ export default function RootLayout({
       name: "Resources",
       href: "/resources",
       icon: BookOpen,
-    },
-
-    {
-      name: "AI Assistant",
-      href: "/ai",
-      icon: Bot,
     },
 
     {
@@ -85,12 +83,6 @@ export default function RootLayout({
     },
 
     {
-      name: "Winners",
-      href: "/winners",
-      icon: Award,
-    },
-
-    {
       name: "Gallery",
       href: "/gallery",
       icon: ImageIcon,
@@ -109,7 +101,7 @@ export default function RootLayout({
     },
 
     {
-      name: "Teachers",
+      name: "Teacher Profiles",
       href: "/teachers",
       icon: Users,
     },
@@ -133,17 +125,14 @@ export default function RootLayout({
       <body className="bg-[#EAF1F8] text-[#10243E]">
 
         {/* MOBILE TOPBAR */}
-        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#12355B]/95 backdrop-blur-xl border-b border-white/10 shadow-xl flex items-center justify-between px-5 py-4">
+        <div className="lg:hidden fixed top-0 left-0 right-0 z-50 bg-[#1E3A5F] text-white shadow-lg flex items-center justify-between px-5 py-4">
 
-          <h1 className="text-xl font-bold text-white">
+          <h1 className="text-xl font-bold">
             GIHS CAMPUS HUB
           </h1>
 
-          <button
-            onClick={() => setOpen(!open)}
-            className="bg-white/10 p-2 rounded-xl text-white"
-          >
-            <Menu size={26} />
+          <button onClick={() => setOpen(!open)}>
+            <Menu size={28} />
           </button>
 
         </div>
@@ -154,13 +143,12 @@ export default function RootLayout({
           <aside
             className={`
               fixed top-0 left-0 z-50
-              h-[100dvh]
-              overflow-y-auto
-              overflow-x-hidden
-              bg-[#12355B]
+              h-screen
+              bg-[#1E3A5F]
               text-white
               shadow-2xl
               transition-all duration-300
+              overflow-y-auto
               ${collapsed ? "w-24" : "w-72"}
               ${open ? "translate-x-0" : "-translate-x-full"}
               lg:translate-x-0
@@ -168,7 +156,7 @@ export default function RootLayout({
           >
 
             {/* LOGO */}
-            <div className="p-6 border-b border-white/10 sticky top-0 bg-[#12355B] z-10">
+            <div className="p-6 border-b border-white/10 sticky top-0 bg-[#1E3A5F] z-10">
 
               <div className="flex items-center justify-between">
 
@@ -176,11 +164,11 @@ export default function RootLayout({
 
                   <div>
 
-                    <h1 className="text-3xl font-black tracking-wide">
+                    <h1 className="text-3xl font-black leading-tight">
                       GIHS
                     </h1>
 
-                    <p className="text-sm text-blue-100 mt-1">
+                    <p className="text-sm text-white/70">
                       Campus Hub
                     </p>
 
@@ -195,7 +183,7 @@ export default function RootLayout({
                     items-center justify-center
                     bg-white/10
                     hover:bg-white/20
-                    rounded-xl
+                    rounded-2xl
                     p-2
                     transition
                   "
@@ -215,7 +203,7 @@ export default function RootLayout({
             </div>
 
             {/* NAVIGATION */}
-            <nav className="p-3 space-y-2 pb-24">
+            <nav className="p-4 space-y-3 pb-24">
 
               {links.map((link) => {
 
@@ -232,29 +220,23 @@ export default function RootLayout({
                     className={`
                       flex items-center
                       ${collapsed ? "justify-center" : "gap-4"}
-                      px-4 py-3 rounded-2xl
+                      px-5 py-4 rounded-3xl
                       transition-all duration-200
                       font-medium
-                      group
                       ${
                         active
-                          ? "bg-white text-[#12355B] shadow-lg"
-                          : "hover:bg-white/10 text-white"
+                          ? "bg-gradient-to-r from-[#FFFFFF] to-[#DCEBFF] text-[#12355B] shadow-2xl"
+                          : "hover:bg-gradient-to-r hover:from-white/20 hover:to-white/5 hover:translate-x-1 text-white"
                       }
                     `}
                   >
 
-                    <Icon
-                      size={22}
-                      className="shrink-0"
-                    />
+                    <Icon size={22} />
 
                     {!collapsed && (
-
-                      <span className="truncate">
+                      <span>
                         {link.name}
                       </span>
-
                     )}
 
                   </Link>
@@ -276,19 +258,160 @@ export default function RootLayout({
 
           )}
 
-          {/* MAIN CONTENT */}
+          {/* PAGE CONTENT */}
           <main
             className={`
               flex-1
               min-h-screen
               pt-24 lg:pt-8
-              px-4 sm:px-6 lg:px-10
+              px-6 lg:px-10
               pb-10
               transition-all duration-300
-              overflow-x-hidden
+              overflow-hidden
               ${collapsed ? "lg:ml-24" : "lg:ml-72"}
             `}
           >
+
+            {/* TOP RIGHT LOGIN */}
+            <div className="flex justify-end mb-6 relative">
+
+              <button
+                onClick={() => setLoginOpen(!loginOpen)}
+                className="
+                  bg-white
+                  border border-slate-200
+                  shadow-lg
+                  hover:shadow-xl
+                  px-5 py-3
+                  rounded-2xl
+                  flex items-center gap-3
+                  transition
+                "
+              >
+
+                <Shield size={20} />
+
+                <span className="font-semibold">
+                  Login
+                </span>
+
+                <ChevronDown size={18} />
+
+              </button>
+
+              {/* DROPDOWN */}
+              {loginOpen && (
+
+                <div
+                  className="
+                    absolute
+                    top-16
+                    right-0
+                    w-72
+                    bg-white
+                    rounded-3xl
+                    shadow-2xl
+                    border border-slate-200
+                    overflow-hidden
+                    z-50
+                  "
+                >
+
+                  <Link
+                    href="/student"
+                    className="
+                      flex items-center gap-4
+                      px-6 py-5
+                      hover:bg-slate-100
+                      transition
+                    "
+                  >
+
+                    <div className="bg-blue-100 text-blue-600 p-3 rounded-2xl">
+
+                      <User size={22} />
+
+                    </div>
+
+                    <div>
+
+                      <h3 className="font-bold">
+                        Student Portal
+                      </h3>
+
+                      <p className="text-sm text-gray-500">
+                        Academic resources & learning
+                      </p>
+
+                    </div>
+
+                  </Link>
+
+                  <Link
+                    href="/staff"
+                    className="
+                      flex items-center gap-4
+                      px-6 py-5
+                      hover:bg-slate-100
+                      transition
+                    "
+                  >
+
+                    <div className="bg-orange-100 text-orange-600 p-3 rounded-2xl">
+
+                      <Users size={22} />
+
+                    </div>
+
+                    <div>
+
+                      <h3 className="font-bold">
+                        Staff Portal
+                      </h3>
+
+                      <p className="text-sm text-gray-500">
+                        Uploads & management
+                      </p>
+
+                    </div>
+
+                  </Link>
+
+                  <Link
+                    href="/admin"
+                    className="
+                      flex items-center gap-4
+                      px-6 py-5
+                      hover:bg-slate-100
+                      transition
+                    "
+                  >
+
+                    <div className="bg-violet-100 text-violet-600 p-3 rounded-2xl">
+
+                      <UserCog size={22} />
+
+                    </div>
+
+                    <div>
+
+                      <h3 className="font-bold">
+                        Admin Portal
+                      </h3>
+
+                      <p className="text-sm text-gray-500">
+                        Full system control
+                      </p>
+
+                    </div>
+
+                  </Link>
+
+                </div>
+
+              )}
+
+            </div>
 
             {children}
 

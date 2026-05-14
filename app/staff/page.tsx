@@ -1,58 +1,58 @@
 import {
-  Shield,
   Users,
-  Database,
-  Settings,
+  Upload,
+  FolderOpen,
+  Bell,
   ArrowRight,
 } from "lucide-react"
 
-export default function AdminPortal() {
+export default function StaffPortal() {
 
-  const adminCards = [
+  const tools = [
 
     {
-      title: "User Management",
-      desc: "Manage students and staff",
-      icon: Users,
+      title: "Upload Resources",
+      desc: "Manage notes and worksheets",
+      icon: Upload,
+      color: "from-orange-500 to-red-500",
+    },
+
+    {
+      title: "Manage Folders",
+      desc: "Organize Google Drive resources",
+      icon: FolderOpen,
       color: "from-blue-500 to-cyan-500",
     },
 
     {
-      title: "System Database",
-      desc: "Control platform resources",
-      icon: Database,
+      title: "Post Announcements",
+      desc: "Update school notices",
+      icon: Bell,
       color: "from-violet-500 to-indigo-500",
-    },
-
-    {
-      title: "Platform Settings",
-      desc: "Configure dashboard modules",
-      icon: Settings,
-      color: "from-emerald-500 to-teal-500",
     },
   ]
 
   return (
     <main className="space-y-8">
 
-      <section className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 text-white rounded-[35px] p-10 shadow-2xl">
+      <section className="bg-gradient-to-r from-orange-500 via-red-500 to-pink-500 text-white rounded-[35px] p-10 shadow-2xl">
 
         <div className="flex items-center gap-5 mb-5">
 
           <div className="bg-white/20 p-5 rounded-3xl">
 
-            <Shield size={40} />
+            <Users size={40} />
 
           </div>
 
           <div>
 
             <h1 className="text-5xl font-black">
-              Admin Portal
+              Staff Portal
             </h1>
 
             <p className="text-white/90 text-lg mt-2">
-              Full institutional management dashboard
+              Teacher & staff management system
             </p>
 
           </div>
@@ -63,9 +63,9 @@ export default function AdminPortal() {
 
       <section className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
 
-        {adminCards.map((card, index) => {
+        {tools.map((tool, index) => {
 
-          const Icon = card.icon
+          const Icon = tool.icon
 
           return (
 
@@ -82,7 +82,7 @@ export default function AdminPortal() {
               "
             >
 
-              <div className={`h-3 bg-gradient-to-r ${card.color}`} />
+              <div className={`h-3 bg-gradient-to-r ${tool.color}`} />
 
               <div className="p-8">
 
@@ -99,11 +99,11 @@ export default function AdminPortal() {
                 </div>
 
                 <h2 className="text-2xl font-bold mb-3">
-                  {card.title}
+                  {tool.title}
                 </h2>
 
                 <p className="text-slate-500">
-                  {card.desc}
+                  {tool.desc}
                 </p>
 
               </div>

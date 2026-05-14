@@ -1,33 +1,47 @@
 import {
-  Shield,
-  Users,
-  Database,
-  Settings,
+  GraduationCap,
+  BookOpen,
+  Brain,
+  Trophy,
+  Calendar,
   ArrowRight,
 } from "lucide-react"
 
-export default function AdminPortal() {
+import Link from "next/link"
 
-  const adminCards = [
+export default function StudentPortal() {
+
+  const cards = [
 
     {
-      title: "User Management",
-      desc: "Manage students and staff",
-      icon: Users,
+      title: "Study Resources",
+      desc: "Access notes, worksheets and PYQs",
+      icon: BookOpen,
+      href: "/resources",
       color: "from-blue-500 to-cyan-500",
     },
 
     {
-      title: "System Database",
-      desc: "Control platform resources",
-      icon: Database,
+      title: "AI Assistant",
+      desc: "Get academic help instantly",
+      icon: Brain,
+      href: "/ai",
       color: "from-violet-500 to-indigo-500",
     },
 
     {
-      title: "Platform Settings",
-      desc: "Configure dashboard modules",
-      icon: Settings,
+      title: "Leaderboard",
+      desc: "Check rankings and achievements",
+      icon: Trophy,
+      href: "/leaderboard",
+      color: "from-yellow-400 to-orange-500",
+    },
+
+    {
+      title: "Events",
+      desc: "View upcoming school events",
+      icon: Calendar,
+      href: "/events",
       color: "from-emerald-500 to-teal-500",
     },
   ]
@@ -35,24 +49,24 @@ export default function AdminPortal() {
   return (
     <main className="space-y-8">
 
-      <section className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 text-white rounded-[35px] p-10 shadow-2xl">
+      <section className="bg-gradient-to-r from-blue-600 via-cyan-500 to-sky-500 text-white rounded-[35px] p-10 shadow-2xl">
 
         <div className="flex items-center gap-5 mb-5">
 
           <div className="bg-white/20 p-5 rounded-3xl">
 
-            <Shield size={40} />
+            <GraduationCap size={40} />
 
           </div>
 
           <div>
 
             <h1 className="text-5xl font-black">
-              Admin Portal
+              Student Portal
             </h1>
 
             <p className="text-white/90 text-lg mt-2">
-              Full institutional management dashboard
+              Academic resources and learning ecosystem
             </p>
 
           </div>
@@ -61,23 +75,25 @@ export default function AdminPortal() {
 
       </section>
 
-      <section className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <section className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
 
-        {adminCards.map((card, index) => {
+        {cards.map((card, index) => {
 
           const Icon = card.icon
 
           return (
 
-            <div
+            <Link
               key={index}
+              href={card.href}
               className="
                 bg-white
                 rounded-3xl
-                shadow-lg
                 border border-slate-200
+                shadow-lg
                 overflow-hidden
                 hover:shadow-2xl
+                hover:-translate-y-1
                 transition-all
               "
             >
@@ -108,7 +124,7 @@ export default function AdminPortal() {
 
               </div>
 
-            </div>
+            </Link>
 
           )
         })}

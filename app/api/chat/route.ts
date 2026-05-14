@@ -1,32 +1,54 @@
 import { GoogleGenerativeAI } from "@google/generative-ai"
 
-const genAI = new GoogleGenerativeAI(
-  process.env.GEMINI_API_KEY!
-)
-
 export async function POST(req: Request) {
 
   try {
 
-    const { message } = await req.json()
+    const { messages } = await req.json()
 
-    const model = genAI.getGenerativeModel({
-      model: "gemini-1.5-flash",
-    })
+    const latestMessage =
+      messages[messages.length - 1].text
 
-    const result = await model.generateContent(message)
+    const apiKey =
+      process.env.GEMINI_API_KEY
 
-    const response = result.response.text()
+    if (!apiKey) {
+
+      return Response.json({
+        reply:
+          "Missing Gemini API Key",
+      })
+    }
+
+    const genAI =
+      new GoogleGenerativeAI(apiKey)
+
+    const model =
+      genAI.getGenerativeModel({
+        model: "gemini-1.5-flash",
+      })
+
+    const result =
+      await model.generateContent(
+        latestMessage
+      )
+
+    const response =
+      await result.response
+
+    const text = response.text()
 
     return Response.json({
-      reply: response,
+      reply: text,
     })
 
-  } catch (error) {
+  } catch (error: any) {
+
+    console.log(error)
 
     return Response.json({
-      reply: "Something went wrong.",
+      reply:
+        "Server Error Happened",
     })
-
   }
 }
