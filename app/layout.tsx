@@ -318,7 +318,7 @@ export default function RootLayout({
                 >
 
                   <Link
-                    href="/student"
+                    href="/login?portal=student"
                     className="
                       flex items-center gap-4
                       px-6 py-5
@@ -348,7 +348,7 @@ export default function RootLayout({
                   </Link>
 
                   <Link
-                    href="/staff"
+                    href="/login?portal=staff"
                     className="
                       flex items-center gap-4
                       px-6 py-5
@@ -378,7 +378,7 @@ export default function RootLayout({
                   </Link>
 
                   <Link
-                    href="/admin"
+                    href="/login?portal=admin"
                     className="
                       flex items-center gap-4
                       px-6 py-5
