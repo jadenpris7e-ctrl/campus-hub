@@ -1,119 +1,191 @@
+"use client"
+
+import { useEffect, useState } from "react"
+
+import { useRouter } from "next/navigation"
+
+import {
+  onAuthStateChanged,
+} from "firebase/auth"
+
+import {
+  auth,
+} from "@/lib/firebase"
+
+import {
+  getUserRole,
+} from "@/lib/getRole"
+
 import {
   Shield,
+  Bell,
   Users,
-  Database,
-  Settings,
-  ArrowRight,
+  Calendar,
+  LogOut,
 } from "lucide-react"
 
-export default function AdminPortal() {
+export default function AdminPage() {
 
-  const adminCards = [
+  const router = useRouter()
 
-    {
-      title: "User Management",
-      desc: "Manage students and staff",
-      icon: Users,
-      color: "from-blue-500 to-cyan-500",
-    },
+  const [loading, setLoading] = useState(true)
 
-    {
-      title: "System Database",
-      desc: "Control platform resources",
-      icon: Database,
-      color: "from-violet-500 to-indigo-500",
-    },
+  useEffect(() => {
 
-    {
-      title: "Platform Settings",
-      desc: "Configure dashboard modules",
-      icon: Settings,
-      color: "from-emerald-500 to-teal-500",
-    },
-  ]
+    const unsubscribe = onAuthStateChanged(
+      auth,
+      async (user) => {
+
+        if (!user?.email) {
+
+          router.push("/login?role=admin")
+
+          return
+        }
+
+        const role = await getUserRole(user.email)
+
+        if (role !== "admin") {
+
+          router.push("/")
+
+          return
+        }
+
+        setLoading(false)
+      }
+    )
+
+    return () => unsubscribe()
+
+  }, [router])
+
+  if (loading) {
+
+    return (
+
+      <main className="p-10">
+
+        <h1 className="text-3xl font-bold">
+          Checking Access...
+        </h1>
+
+      </main>
+    )
+  }
 
   return (
+
     <main className="space-y-8">
 
-      <section className="bg-gradient-to-r from-violet-600 via-indigo-600 to-blue-600 text-white rounded-[35px] p-10 shadow-2xl">
+      {/* HERO */}
+      <section className="bg-gradient-to-r from-[#7C3AED] via-[#4F46E5] to-[#2563EB] text-white rounded-[35px] p-10 shadow-2xl">
 
-        <div className="flex items-center gap-5 mb-5">
+        <p className="uppercase tracking-[4px] text-sm text-white/80 mb-3">
+          ADMIN CONTROL CENTER
+        </p>
 
-          <div className="bg-white/20 p-5 rounded-3xl">
+        <h1 className="text-5xl font-extrabold mb-4">
+          Admin Dashboard
+        </h1>
 
-            <Shield size={40} />
+        <p className="text-lg text-white/90">
+          Manage the entire school ecosystem.
+        </p>
+
+      </section>
+
+      {/* ADMIN GRID */}
+      <section className="grid md:grid-cols-2 xl:grid-cols-4 gap-6">
+
+        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-200">
+
+          <div className="bg-violet-100 text-violet-600 p-4 rounded-2xl w-fit mb-5">
+
+            <Bell size={30} />
 
           </div>
 
-          <div>
+          <h2 className="text-2xl font-bold mb-3">
+            Announcements
+          </h2>
 
-            <h1 className="text-5xl font-black">
-              Admin Portal
-            </h1>
+          <p className="text-gray-500">
+            Upload notices and school updates.
+          </p>
 
-            <p className="text-white/90 text-lg mt-2">
-              Full institutional management dashboard
-            </p>
+        </div>
+
+        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-200">
+
+          <div className="bg-blue-100 text-blue-600 p-4 rounded-2xl w-fit mb-5">
+
+            <Users size={30} />
 
           </div>
+
+          <h2 className="text-2xl font-bold mb-3">
+            User Management
+          </h2>
+
+          <p className="text-gray-500">
+            Manage students and teachers.
+          </p>
+
+        </div>
+
+        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-200">
+
+          <div className="bg-orange-100 text-orange-600 p-4 rounded-2xl w-fit mb-5">
+
+            <Calendar size={30} />
+
+          </div>
+
+          <h2 className="text-2xl font-bold mb-3">
+            Events
+          </h2>
+
+          <p className="text-gray-500">
+            Manage school activities.
+          </p>
+
+        </div>
+
+        <div className="bg-white rounded-3xl p-8 shadow-lg border border-slate-200">
+
+          <div className="bg-emerald-100 text-emerald-600 p-4 rounded-2xl w-fit mb-5">
+
+            <Shield size={30} />
+
+          </div>
+
+          <h2 className="text-2xl font-bold mb-3">
+            Platform Control
+          </h2>
+
+          <p className="text-gray-500">
+            Full administrative access.
+          </p>
 
         </div>
 
       </section>
 
-      <section className="grid md:grid-cols-2 xl:grid-cols-3 gap-6">
+      {/* LOGOUT */}
+      <button
+        onClick={() => {
+          auth.signOut()
+          router.push("/")
+        }}
+        className="flex items-center gap-3 bg-red-600 text-white px-6 py-4 rounded-2xl"
+      >
 
-        {adminCards.map((card, index) => {
+        <LogOut size={22} />
 
-          const Icon = card.icon
+        Logout
 
-          return (
-
-            <div
-              key={index}
-              className="
-                bg-white
-                rounded-3xl
-                shadow-lg
-                border border-slate-200
-                overflow-hidden
-                hover:shadow-2xl
-                transition-all
-              "
-            >
-
-              <div className={`h-3 bg-gradient-to-r ${card.color}`} />
-
-              <div className="p-8">
-
-                <div className="flex items-center justify-between mb-8">
-
-                  <div className="bg-slate-100 p-4 rounded-2xl">
-
-                    <Icon size={30} />
-
-                  </div>
-
-                  <ArrowRight />
-
-                </div>
-
-                <h2 className="text-2xl font-bold mb-3">
-                  {card.title}
-                </h2>
-
-                <p className="text-slate-500">
-                  {card.desc}
-                </p>
-
-              </div>
-
-            </div>
-
-          )
-        })}
-
-      </section>
+      </button>
 
     </main>
   )

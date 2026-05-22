@@ -7,11 +7,24 @@ import {
   BookOpen,
   FileText,
   Search,
+  ExternalLink,
+  FolderOpen,
 } from "lucide-react"
+
+type ResourceLinks = {
+  textbook?: string
+  worksheet?: string
+  pyq?: string
+}
+
+type ChapterType = {
+  chapter: string
+  resources: ResourceLinks
+}
 
 type SubjectsType = {
   [key: number]: {
-    [subject: string]: string[]
+    [subject: string]: ChapterType[]
   }
 }
 
@@ -30,82 +43,155 @@ export default function ResourcesPage() {
     9: {
 
       Mathematics: [
-        "Number Systems",
-        "Polynomials",
-        "Coordinate Geometry",
+
+        {
+          chapter: "Number Systems",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+
+            worksheet:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+
+            pyq:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
+        {
+          chapter: "Polynomials",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
       ],
 
       Science: [
-        "Matter Around Us",
-        "Atoms & Molecules",
+
+        {
+          chapter: "Matter Around Us",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
       ],
 
-      English: [
-        "The Fun They Had",
-      ],
     },
 
     10: {
 
       Mathematics: [
-        "Trigonometry",
-        "Statistics",
+
+        {
+          chapter: "Trigonometry",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
+        {
+          chapter: "Statistics",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
       ],
 
-      Science: [
-        "Light",
-        "Electricity",
-      ],
-
-      English: [
-        "The Last Leaf",
-      ],
     },
 
     11: {
 
       Physics: [
-        "Motion",
-        "Laws of Motion",
+
+        {
+          chapter: "Motion",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
       ],
 
-      Chemistry: [
-        "Structure of Atom",
-        "Chemical Bonding",
-      ],
-
-      Mathematics: [
-        "Sets",
-        "Relations & Functions",
-      ],
-
-      English: [
-        "The Portrait of a Lady",
-      ],
     },
 
     12: {
 
-      Physics: [
-        "Electrostatics",
-        "Current Electricity",
-        "Magnetism",
-      ],
-
-      Chemistry: [
-        "Solutions",
-        "Electrochemistry",
-      ],
-
       Mathematics: [
-        "Matrices",
-        "Calculus",
+
+        {
+          chapter: "Continuity and Differentiability",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+
+            worksheet:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+
+            pyq:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
+        {
+          chapter: "Matrices",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
+        {
+          chapter: "Determinants",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
       ],
 
-      English: [
-        "Lost Spring",
+      Physics: [
+
+        {
+          chapter: "Electrostatics",
+
+          resources: {
+
+            textbook:
+              "https://drive.google.com/drive/folders/13Hg5CLQ3p2m-B2FCOCc0-p7FiXNIhHuU?usp=sharing",
+          },
+        },
+
       ],
+
     },
+
   }
 
   const allChapters = Object.entries(subjectsByGrade).flatMap(
@@ -203,9 +289,16 @@ export default function ResourcesPage() {
                 const searchText = search.toLowerCase()
 
                 return (
-                  item.chapter.toLowerCase().includes(searchText) ||
-                  item.subject.toLowerCase().includes(searchText) ||
-                  `grade ${item.grade}`.includes(searchText)
+                  item.chapter.chapter
+                    .toLowerCase()
+                    .includes(searchText) ||
+
+                  item.subject
+                    .toLowerCase()
+                    .includes(searchText) ||
+
+                  `grade ${item.grade}`
+                    .includes(searchText)
                 )
               })
               .map((item, index) => (
@@ -226,10 +319,10 @@ export default function ResourcesPage() {
                   </p>
 
                   <h3 className="text-2xl font-bold mb-2">
-                    {item.chapter}
+                    {item.chapter.chapter}
                   </h3>
 
-                  <p className="text-gray-600 mb-5">
+                  <p className="text-gray-600">
                     {item.subject}
                   </p>
 
@@ -365,22 +458,26 @@ export default function ResourcesPage() {
           </button>
 
           <h2 className="text-3xl font-bold mb-6">
+
             Grade {selectedGrade} → {selectedSubject}
+
           </h2>
 
           <div className="grid md:grid-cols-2 gap-6">
 
             {subjectsByGrade[selectedGrade]?.[selectedSubject]?.map(
-              (chapter) => (
+              (chapter, index) => (
 
                 <div
-                  key={chapter}
+                  key={index}
                   className="
                     bg-white
                     rounded-3xl
                     shadow-lg
                     border border-slate-200
                     p-7
+                    hover:shadow-2xl
+                    transition
                   "
                 >
 
@@ -395,7 +492,7 @@ export default function ResourcesPage() {
                     <div>
 
                       <h3 className="text-2xl font-bold">
-                        {chapter}
+                        {chapter.chapter}
                       </h3>
 
                       <p className="text-gray-500">
@@ -403,6 +500,92 @@ export default function ResourcesPage() {
                       </p>
 
                     </div>
+
+                  </div>
+
+                  <div className="flex flex-wrap gap-3">
+
+                    {chapter.resources.textbook && (
+
+                      <a
+                        href={chapter.resources.textbook}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="
+                          bg-[#2563EB]
+                          text-white
+                          px-5
+                          py-3
+                          rounded-xl
+                          hover:scale-105
+                          transition
+                          flex items-center gap-2
+                        "
+                      >
+
+                        <FolderOpen size={18} />
+
+                        Textbook
+
+                        <ExternalLink size={18} />
+
+                      </a>
+
+                    )}
+
+                    {chapter.resources.worksheet && (
+
+                      <a
+                        href={chapter.resources.worksheet}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="
+                          bg-slate-100
+                          px-5
+                          py-3
+                          rounded-xl
+                          hover:bg-slate-200
+                          transition
+                          flex items-center gap-2
+                        "
+                      >
+
+                        <FolderOpen size={18} />
+
+                        Worksheet
+
+                        <ExternalLink size={18} />
+
+                      </a>
+
+                    )}
+
+                    {chapter.resources.pyq && (
+
+                      <a
+                        href={chapter.resources.pyq}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="
+                          bg-slate-100
+                          px-5
+                          py-3
+                          rounded-xl
+                          hover:bg-slate-200
+                          transition
+                          flex items-center gap-2
+                        "
+                      >
+
+                        <FolderOpen size={18} />
+
+                        PYQ
+
+                        <ExternalLink size={18} />
+
+                      </a>
+
+                    )}
 
                   </div>
 

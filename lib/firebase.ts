@@ -2,23 +2,37 @@
 
 import { initializeApp } from "firebase/app"
 
-import { getAuth } from "firebase/auth"
+import {
+  getAuth,
+} from "firebase/auth"
+
+import {
+  getFirestore,
+} from "firebase/firestore"
 
 const firebaseConfig = {
 
-  apiKey: "AIzaSyCxuBZ6FGKZXSxlAWakAFWwVcPh9LNHLak",
+  apiKey:
+    "AIzaSyCxuBZ6FGKZXSxlAWakAFWwVcPh9LNHLak",
 
-  authDomain: "gihs-campus-hub.firebaseapp.com",
+  authDomain:
+    "gihs-campus-hub.firebaseapp.com",
 
-  projectId: "gihs-campus-hub",
+  projectId:
+    "gihs-campus-hub",
 
-  storageBucket: "gihs-campus-hub.firebasestorage.app",
+  storageBucket:
+    "gihs-campus-hub.firebasestorage.app",
 
-  messagingSenderId: "944894494227",
+  messagingSenderId:
+    "944894494227",
 
-  appId: "1:944894494227:web:804e29cf470d6dd465a1e6",
+  appId:
+    "1:944894494227:web:804e29cf470d6dd465a1e6",
 }
 
 const app = initializeApp(firebaseConfig)
 
 export const auth = getAuth(app)
+
+export const db = getFirestore(app)
