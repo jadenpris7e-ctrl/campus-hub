@@ -1,6 +1,11 @@
 "use client"
 
-import { useState } from "react"
+export const dynamic = "force-dynamic"
+
+import {
+  Suspense,
+  useState,
+} from "react"
 
 import {
   useRouter,
@@ -22,11 +27,12 @@ import {
 
 import { auth } from "@/lib/firebase"
 
-export default function LoginPage() {
+function LoginContent() {
 
   const router = useRouter()
 
-  const searchParams = useSearchParams()
+  const searchParams =
+    useSearchParams()
 
   const portal =
     searchParams.get("portal") || ""
@@ -79,7 +85,7 @@ export default function LoginPage() {
 
     }
 
-    catch (err) {
+    catch {
 
       setError(
         "Invalid email or password"
@@ -364,5 +370,17 @@ export default function LoginPage() {
       </div>
 
     </main>
+  )
+}
+
+export default function LoginPage() {
+
+  return (
+
+    <Suspense>
+
+      <LoginContent />
+
+    </Suspense>
   )
 }
